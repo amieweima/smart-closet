@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+node_modules/
+dist/
+
+# Personal wardrobe data and uploaded photos
+backend/data/
+backend/uploads/
+data/
+
+# Temporary classification files
+.classification-*
+
+# Local backup files
+*.bak
+*.backup-*
+*.feedback-*
+*.layer-fix-*
+*.occasion-weather-*
+*.unique-outfits-*
+*.before-*
+*_backup.py
+frontend/src/App.before-ai.jsx
+
+# Editor and operating system
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Legacy prototype data and photos
+streamlit_prototype/uploads/
+_migration_backup/

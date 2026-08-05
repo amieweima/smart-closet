@@ -1,0 +1,5 @@
+image,actual_label,prediction_1,confidence_1,prediction_2,prediction_3,top1_correct,top3_correct
+11b04697-388f-484f-b1b2-b7686d4bf261.jpg,baseball cap,baseball cap,0.992,t-shirt,jacket,yes,yes
+dbbdd8be-cf3c-465b-b2a6-60275f9d5d08.jpg,shorts,shorts,0.489,cargo shorts,skirt,yes,yes
+dcb450cc-15bc-4ade-82b5-889b9ba24637.jpg,sweatpants,sweatpants,0.942,pants,shorts,yes,yes
+972220ca-9941-4b39-af00-94b355072192.jpg,hoodie,sweatshirt,0.796,jacket,hoodie,no,yes

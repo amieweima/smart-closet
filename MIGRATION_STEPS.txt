@@ -1,0 +1,36 @@
+SMART CLOSET — REACT + FASTAPI MIGRATION
+
+This patch does not include or overwrite:
+- backend/data/wardrobe.csv
+- backend/uploads/
+- streamlit_prototype/
+- your .venv/
+
+1. Copy the patch files into the smart-closet root folder.
+   Allow source-code files to be replaced, but do not delete data or uploads.
+
+2. From the smart-closet PowerShell terminal, install the backend:
+   & .\.venv\Scripts\python.exe -m pip install -r .\backend\requirements.txt
+
+3. Migrate colours and old image locations:
+   & .\.venv\Scripts\python.exe -m backend.app.migrate_legacy_data
+
+4. Start the backend:
+   & .\.venv\Scripts\python.exe -m uvicorn backend.app.main:app --reload --port 8000
+
+5. In a second terminal:
+   cd .\frontend
+   npm install
+   npm run dev
+
+6. Open:
+   http://localhost:5173
+
+7. API checks:
+   http://127.0.0.1:8000/api/health
+   http://127.0.0.1:8000/api/wardrobe
+   http://127.0.0.1:8000/docs
+
+Keep Streamlit until the React version displays the existing wardrobe and
+successfully uploads a new test item. Then make a Git commit before deleting
+or archiving anything.
