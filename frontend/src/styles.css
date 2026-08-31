@@ -608,3 +608,77 @@ dd {
     grid-template-columns: 1fr;
   }
 }
+/* ===== Outfit feedback buttons ===== */
+
+.outfit-feedback {
+  margin-top: 24px;
+  padding: 20px 22px;
+  border: 1px solid #d9ddd3;
+  border-radius: 18px;
+  background: #f8f9f5;
+}
+
+.outfit-feedback h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+
+.outfit-feedback p {
+  margin: 0;
+  color: #5f655b;
+  line-height: 1.5;
+}
+
+.outfit-feedback-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.feedback-button {
+  min-width: 140px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.feedback-button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.feedback-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.feedback-like {
+  background: #eef8ef;
+  color: #1f6a35;
+  border-color: #cfe7d3;
+}
+
+.feedback-like:hover:not(:disabled) {
+  background: #e4f4e7;
+  box-shadow: 0 6px 14px rgba(31, 106, 53, 0.12);
+}
+
+.feedback-dislike {
+  background: #fff1f1;
+  color: #9f2f2f;
+  border-color: #f1cccc;
+}
+
+.feedback-dislike:hover:not(:disabled) {
+  background: #ffe7e7;
+  box-shadow: 0 6px 14px rgba(159, 47, 47, 0.12);
+}
