@@ -4,7 +4,9 @@ An AI-powered wardrobe organizer and outfit recommendation application built wit
 
 Smart Closet lets users upload clothing photos, automatically fills garment details, stores a digital wardrobe, and generates outfit combinations based on occasion, weather, layering rules, and previous feedback.
 
+## App Preview
 
+![Smart Closet App Preview](assets/smart-closet-preview-final.png)
 
 Features
 
