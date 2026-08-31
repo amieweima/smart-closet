@@ -8,7 +8,7 @@ Smart Closet lets users upload clothing photos, automatically fills garment deta
 
 ![Smart Closet App Preview](assets/smart-closet-preview-final.png)
 
-Features
+## Features
 
 Upload and organize clothing items with photos
 
