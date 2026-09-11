@@ -7,26 +7,33 @@ from transformers import pipeline
 
 
 CATEGORY_LABELS = {
-    "t-shirt": "t-shirt",
-    "polo shirt": "polo shirt",
-    "button-up shirt": "button-up shirt",
-    "hoodie": "hoodie",
-    "sweatshirt": "sweatshirt",
-    "sweater": "sweater",
-    "cardigan": "cardigan",
-    "jacket": "jacket",
-    "windbreaker": "windbreaker",
-    "coat": "coat",
-    "jeans": "jeans",
-    "pants": "pants",
-    "sweatpants": "sweatpants",
-    "shorts": "shorts",
-    "cargo shorts": "cargo shorts",
-    "skirt": "skirt",
-    "dress": "dress",
-    "baseball cap": "baseball cap",
-    "shoes": "shoes",
+    "t-shirt": "a short sleeve crew neck t-shirt with no collar",
+    "polo shirt": "a short sleeve polo shirt with a collar and buttons",
+    "button-up shirt": "a collared button-up shirt with buttons down the front",
+
+    "hoodie": "a hooded sweatshirt with a visible hood",
+    "sweatshirt": "a crewneck sweatshirt with no hood",
+    "sweater": "a knitted sweater or pullover",
+    "cardigan": "an open front cardigan sweater with buttons",
+
+    "jacket": "a casual jacket such as a bomber jacket, puffer jacket, or zip jacket",
+    "windbreaker": "a lightweight thin sporty windbreaker shell jacket",
+    "coat": "a structured coat such as a peacoat, overcoat, trench coat, or wool coat",
+
+    "jeans": "denim jeans",
+    "pants": "non-denim trousers or pants",
+    "sweatpants": "casual fleece sweatpants or joggers",
+
+    "shorts": "casual shorts above the knee",
+    "cargo shorts": "cargo shorts with large side pockets",
+
+    "skirt": "a skirt worn on the lower body",
+    "dress": "a one-piece dress",
+
+    "baseball cap": "a baseball cap with a curved brim",
+    "shoes": "a pair of shoes or sneakers",
 }
+
 
 COLOUR_LABELS = {
     "black": "black clothing item",
@@ -47,12 +54,14 @@ COLOUR_LABELS = {
     "multicolour": "multicoloured clothing item",
 }
 
+
 LAYER_TYPE_LABELS = {
     "base layer": "clothing worn as a base layer",
     "mid layer": "clothing worn as a middle layer",
     "outerwear": "outerwear worn over other clothing",
     "single layer": "clothing normally worn by itself",
 }
+
 
 STYLE_LABELS = {
     "casual": "casual fashion clothing",
@@ -65,7 +74,13 @@ STYLE_LABELS = {
     "vintage": "vintage fashion clothing",
 }
 
-SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp"}
+
+SUPPORTED_EXTENSIONS = {
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp",
+}
 
 
 class Prediction(TypedDict):
@@ -84,6 +99,7 @@ class ClothingAttributes(TypedDict):
 @lru_cache(maxsize=1)
 def get_classifier():
     """Load the CLIP model once and reuse it."""
+
     print("Loading clothing classifier...")
 
     return pipeline(
@@ -98,10 +114,14 @@ def validate_image_path(image_path: str | Path) -> Path:
     path = Path(image_path)
 
     if not path.exists():
-        raise FileNotFoundError(f"Image was not found: {path}")
+        raise FileNotFoundError(
+            f"Image was not found: {path}"
+        )
 
     if path.suffix.lower() not in SUPPORTED_EXTENSIONS:
-        raise ValueError(f"Unsupported image format: {path.suffix}")
+        raise ValueError(
+            f"Unsupported image format: {path.suffix}"
+        )
 
     return path
 
@@ -120,10 +140,12 @@ def classify_candidates(
     candidates: dict[str, str],
     top_k: int = 3,
 ) -> list[Prediction]:
-    """Classify an image using a set of canonical labels and CLIP prompts."""
+    """Classify an image using canonical labels and CLIP prompts."""
 
     if top_k < 1:
-        raise ValueError("top_k must be at least 1.")
+        raise ValueError(
+            "top_k must be at least 1."
+        )
 
     classifier = get_classifier()
 
@@ -134,21 +156,38 @@ def classify_candidates(
 
     raw_predictions = classifier(
         image,
-        candidate_labels=list(candidates.values()),
+        candidate_labels=list(
+            candidates.values()
+        ),
     )
 
     predictions: list[Prediction] = []
 
     for result in raw_predictions[:top_k]:
-        prompt = str(result["label"])
-        label = prompt_to_label.get(prompt, prompt)
-        score = float(result["score"])
+        prompt = str(
+            result["label"]
+        )
+
+        label = prompt_to_label.get(
+            prompt,
+            prompt,
+        )
+
+        score = float(
+            result["score"]
+        )
 
         predictions.append(
             {
                 "label": label,
-                "confidence": round(score, 4),
-                "confidence_percent": round(score * 100, 1),
+                "confidence": round(
+                    score,
+                    4,
+                ),
+                "confidence_percent": round(
+                    score * 100,
+                    1,
+                ),
             }
         )
 
@@ -159,9 +198,11 @@ def classify_image(
     image_path: str | Path,
     top_k: int = 3,
 ) -> list[Prediction]:
-    """Return the top clothing-category predictions for one image."""
+    """Return top clothing-category predictions."""
 
-    image = load_image(image_path)
+    image = load_image(
+        image_path
+    )
 
     return classify_candidates(
         image=image,
@@ -174,9 +215,11 @@ def classify_colour(
     image_path: str | Path,
     top_k: int = 3,
 ) -> list[Prediction]:
-    """Return the top colour predictions for one clothing image."""
+    """Return top colour predictions."""
 
-    image = load_image(image_path)
+    image = load_image(
+        image_path
+    )
 
     return classify_candidates(
         image=image,
@@ -189,9 +232,11 @@ def classify_layer_type(
     image_path: str | Path,
     top_k: int = 3,
 ) -> list[Prediction]:
-    """Return the top layering predictions for one clothing image."""
+    """Return top layering predictions."""
 
-    image = load_image(image_path)
+    image = load_image(
+        image_path
+    )
 
     return classify_candidates(
         image=image,
@@ -204,9 +249,11 @@ def classify_style(
     image_path: str | Path,
     top_k: int = 3,
 ) -> list[Prediction]:
-    """Return the top style predictions for one clothing image."""
+    """Return top style predictions."""
 
-    image = load_image(image_path)
+    image = load_image(
+        image_path
+    )
 
     return classify_candidates(
         image=image,
@@ -218,9 +265,11 @@ def classify_style(
 def classify_clothing_attributes(
     image_path: str | Path,
 ) -> ClothingAttributes:
-    """Predict category, colour, layer type, and style for one image."""
+    """Predict category, colour, layer type, and style."""
 
-    image = load_image(image_path)
+    image = load_image(
+        image_path
+    )
 
     category = classify_candidates(
         image=image,
