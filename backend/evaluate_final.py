@@ -134,9 +134,9 @@ def main():
     print()
     print("=" * 50)
 
-    if total != 48:
+    if total != 51:
         print(
-            f"WARNING: Expected 48 images, "
+            f"WARNING: Expected 51 images, "
             f"but found {total}."
         )
 
